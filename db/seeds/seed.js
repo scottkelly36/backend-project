@@ -7,7 +7,14 @@ const {
 } = require("./utils");
 
 const seed = async (data) => {
-	const { categoryData, commentData, reviewData, userData } = data;
+
+	const {
+		categoryData,
+		commentData,
+		reviewData,
+		userData
+	} = data;
+
 	await db.query(`DROP TABLE IF EXISTS comments;`);
 	await db.query(`DROP TABLE IF EXISTS reviews;`);
 	await db.query(`DROP TABLE IF EXISTS users;`);
@@ -53,7 +60,10 @@ const seed = async (data) => {
 
 	const insertCategoriesQueryStr = format(
 		"INSERT INTO categories (slug, description) VALUES %L RETURNING *;",
-		categoryData.map(({ slug, description }) => [slug, description])
+		categoryData.map(({
+			slug,
+			description
+		}) => [slug, description])
 	);
 
 	const categoriesPromise = db
@@ -62,7 +72,11 @@ const seed = async (data) => {
 
 	const insertUsersQueryStr = format(
 		"INSERT INTO users ( username, name, avatar_url) VALUES %L RETURNING *;",
-		userData.map(({ username, name, avatar_url }) => [
+		userData.map(({
+			username,
+			name,
+			avatar_url
+		}) => [
 			username,
 			name,
 			avatar_url,
@@ -111,7 +125,13 @@ const seed = async (data) => {
 	const insertCommentsQueryStr = format(
 		"INSERT INTO comments (body, author, review_id, votes, created_at) VALUES %L RETURNING *;",
 		formattedCommentData.map(
-			({ body, author, review_id, votes = 0, created_at }) => [
+			({
+				body,
+				author,
+				review_id,
+				votes = 0,
+				created_at
+			}) => [
 				body,
 				author,
 				review_id,
