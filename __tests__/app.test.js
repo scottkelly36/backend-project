@@ -13,18 +13,7 @@ afterAll(() => {
     DB.end()
 })
 
-// describe('500: internal server error', () => {
-//     test('when there is a server error return message', () => {
-//         return request(app)
-//             .get("/api/categories")
-//             .expect(500)
-//             .then(({
-//                 body
-//             }) => {
-//                 expect(body.msg).toBe('sorry something went wrong with the server')
-//             })
-//     });
-// });
+
 
 describe("GET categories", () => {
     test('each should have a property of slug and description', () => {
