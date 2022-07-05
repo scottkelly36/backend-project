@@ -116,7 +116,7 @@ describe('PATCH reviews/id', () => {
             .then(({
                 body
             }) => {
-                console.log(body)
+
                 expect(body.review.votes).toBe(2)
             })
     })
@@ -134,7 +134,6 @@ describe('PATCH reviews/id', () => {
             .then(({
                 body
             }) => {
-                console.log(body)
                 expect(body.review.votes).toBe(0)
             })
     })
@@ -166,7 +165,6 @@ describe('PATCH reviews/id', () => {
             .then(({
                 body
             }) => {
-                console.log(body.msg)
                 expect(body.msg)
                     .toBe("Sorry incorrect input")
             })
@@ -174,18 +172,18 @@ describe('PATCH reviews/id', () => {
     })
     test('when passed incorrect data type for inc_votes', () => {
         const vote = {
-            inc_votes: 1
+            inc_votes: "yes"
         }
 
         return request(app)
-            .patch("/api/reviews/wrong")
+            .patch("/api/reviews/1")
             .send(vote)
             .expect(400)
             .then(({
-                body
+                res
             }) => {
-                expect(body.msg).toBe("Sorry incorrect input")
-
+                console.log(res.text)
+                expect(res.text).toBe("Sorry incorrect datatype for votes")
             })
 
     })
