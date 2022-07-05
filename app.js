@@ -13,6 +13,10 @@ const {
 
 //errors
 const {
+    getUsers
+} = require('./controllers/users.controllers');
+
+const {
     handleServerErrors,
     handleWrongEndpoint,
     handleNotFound,
@@ -25,8 +29,11 @@ app.use(express.json());
 
 
 app.get('/api/categories', getCategories);
+
 app.get('/api/reviews/:review_id', getReviewById);
 app.patch('/api/reviews/:review_id', patchReviewVotes);
+
+app.get('/api/users', getUsers);
 
 
 app.use('*', (req, res) => {
