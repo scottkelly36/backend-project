@@ -187,3 +187,9 @@ describe('PATCH reviews/id', () => {
 
     })
 })
+
+describe('GET /api/reviews/id -comment_count', () => {
+    test('return a review obj with comment count', () => {
+
+    });
+});
