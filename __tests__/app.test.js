@@ -189,51 +189,8 @@ describe('PATCH reviews/id', () => {
     })
 })
 
-<<<<<<< HEAD
 describe('GET /api/reviews/id -comment_count', () => {
     test('return a review obj with comment count', () => {
 
-=======
-describe('Get all users', () => {
-    test('return all users and a status of 200', () => {
-        return request(app)
-            .get('/api/users')
-            .expect(200)
-            .then(({
-                body
-            }) => {
-                expect(body.users).not.toHaveLength(0);
-                body.users.forEach((user) => {
-                    expect(user).toHaveProperty("username");
-                    expect(user).toHaveProperty("name");
-                    expect(user).toHaveProperty("avatar_url")
-                })
-            })
-    });
-    test('make sure te data coming back is correct types', () => {
-        return request(app)
-            .get('/api/users')
-            .expect(200)
-            .then(({
-                body
-            }) => {
-                expect(body.users).not.toHaveLength(0);
-                body.users.forEach((user) => {
-                    expect(typeof user.username).toBe("string");
-                    expect(typeof user.name).toBe("string");
-                    expect(typeof user.avatar_url).toBe("string")
-                })
-            })
-    });
-    test('when spelling is incorrect return 404', () => {
-        return request(app)
-            .get("/api/user")
-            .expect(404)
-            .then(({
-                body
-            }) => {
-                expect(body.msg).toBe("Sorry we cant find that end point")
-            })
->>>>>>> b1f3ab02851cb0fa522141ea1fcb40aee0c44965
     });
 });

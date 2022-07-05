@@ -1,6 +1,7 @@
 const DB = require("../db/connection");
 
 exports.selectReviewById = (id) => {
+    const comment_count = DB.query(``)
     return DB.query(`SELECT * from reviews WHERE review_id = $1`, [id])
         .then((result) => {
             if (result.rows.length === 0) {
