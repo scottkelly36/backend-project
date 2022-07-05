@@ -18,7 +18,9 @@ exports.handleCustom = (err, req, res, next) => {
 
 exports.handleNotFound = (err, req, res, next) => {
     if (err.status && err.msg) {
-        res.status(err.status).send(err.msg)
+        res.status(err.status).send({
+            msg: err.msg
+        })
     } else next(err)
 
 }

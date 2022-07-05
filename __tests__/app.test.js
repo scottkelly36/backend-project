@@ -81,9 +81,9 @@ describe('GET Reviews by id', () => {
             .get("/api/reviews/1000")
             .expect(404)
             .then(({
-                res
+                body
             }) => {
-                expect(res.text)
+                expect(body.msg)
                     .toBe("Sorry Review cant be found")
             })
     });
@@ -147,9 +147,9 @@ describe('PATCH reviews/id', () => {
             .send(vote)
             .expect(404)
             .then(({
-                res
+                body
             }) => {
-                expect(res.text)
+                expect(body.msg)
                     .toBe("Sorry Review cant be found")
             })
     });
@@ -180,10 +180,9 @@ describe('PATCH reviews/id', () => {
             .send(vote)
             .expect(400)
             .then(({
-                res
+                body
             }) => {
-                console.log(res.text)
-                expect(res.text).toBe("Sorry incorrect datatype for votes")
+                expect(body.msg).toBe("Sorry incorrect datatype for votes")
             })
 
     })
