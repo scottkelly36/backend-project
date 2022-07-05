@@ -23,6 +23,7 @@ describe("GET categories", () => {
             .then(({
                 body
             }) => {
+                expect(body.categories).not.toHaveLength(0);
                 body.categories.forEach((category) => {
                     expect(category).toHaveProperty("slug");
                     expect(category).toHaveProperty("description");
@@ -121,3 +122,21 @@ describe('PATCH reviews/id', () => {
             })
     })
 })
+
+describe.only('Get all users', () => {
+    test('return all users and a status of 200', () => {
+        return request(app)
+            .get('/api/users')
+            .expect(200)
+            .then(({
+                body
+            }) => {
+                expect(body.users).not.toHaveLength(0);
+                body.categories.forEach((user) => {
+                    expect(user).toHaveProperty("username");
+                    expect(user).toHaveProperty("name");
+                    expect(user).toHaveProperty("avatar_url")
+                })
+            })
+    });
+});
