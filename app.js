@@ -10,6 +10,7 @@ const {
     handleServerErrors,
     handleWrongEndpoint,
     handleNotFound,
+    handleCustom,
 
 } = require('./middleware/errors.middleware');
 
@@ -29,7 +30,7 @@ app.use('*', (req, res) => {
 
 
 app.use(handleNotFound);
-
+app.use(handleCustom)
 app.use(handleServerErrors);
 
 

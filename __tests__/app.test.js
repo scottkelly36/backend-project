@@ -36,6 +36,7 @@ describe("GET categories", () => {
             .then(({
                 body
             }) => {
+                expect(body.categories).not.toHaveLength(0);
                 body.categories.forEach((category) => {
                     expect(typeof category.slug).toBe("string");
                     expect(typeof category.description).toBe("string");
@@ -52,6 +53,7 @@ describe("GET categories", () => {
                 expect(body.msg).toBe("Sorry we cant find that end point")
             })
     });
+
 })
 
 describe('GET Reviews by id', () => {
@@ -77,11 +79,22 @@ describe('GET Reviews by id', () => {
         return request(app)
             .get("/api/reviews/1000")
             .expect(404)
-            .then((
-                body
-            ) => {
-                expect(body.text)
+            .then(({
+                res
+            }) => {
+                expect(res.text)
                     .toBe("Sorry Review cant be found")
             })
     });
-});
+    test('when passed incorrect data type', () => {
+        return request(app)
+            .get("/api/reviews/wrong")
+            .expect(400)
+            .then(({
+                res
+            }) => {
+                expect(res.text)
+                    .toBe("Sorry incorrect input")
+            })
+    });
+})
