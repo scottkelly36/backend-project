@@ -54,6 +54,7 @@ describe("GET categories", () => {
             })
     });
 
+
 })
 
 describe('GET Reviews by id', () => {
@@ -97,5 +98,26 @@ describe('GET Reviews by id', () => {
                 expect(body.msg)
                     .toBe("Sorry incorrect input")
             })
-    });
+
+    })
+})
+
+describe('PATCH reviews/id', () => {
+    test('when passed a vote obj increase the current votes by amount stated', () => {
+
+        const vote = {
+            inc_votes: 1
+        }
+
+
+        return request(app)
+            .patch("/api/reviews/1")
+            .send(vote)
+            .expect(200)
+            .then(({
+                body
+            }) => {
+                expect(body.votes).toBe(2)
+            })
+    })
 })
