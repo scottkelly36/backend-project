@@ -91,9 +91,10 @@ describe('GET Reviews by id', () => {
             .get("/api/reviews/wrong")
             .expect(400)
             .then(({
-                res
+                body
             }) => {
-                expect(res.text)
+                console.log(body.msg)
+                expect(body.msg)
                     .toBe("Sorry incorrect input")
             })
     });
