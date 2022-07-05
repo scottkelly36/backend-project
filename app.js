@@ -13,7 +13,8 @@ const {
 const {
     handleServerErrors,
     handleWrongEndpoint,
-    patchReviewVotes
+    handleNotFound,
+    handleCustom,
 
 } = require('./middleware/errors.middleware');
 
@@ -26,12 +27,17 @@ app.get('/api/reviews/:review_id', getReviewById);
 app.patch('/api/reviews/:review_id', patchReviewVotes);
 
 
-app.all('/*', (req, res) => {
+app.use('*', (req, res) => {
     res.status(404).send({
         msg: "Sorry we cant find that end point"
     })
 });
+
+
+app.use(handleNotFound);
+app.use(handleCustom)
 app.use(handleServerErrors);
+
 
 
 module.exports = app;
