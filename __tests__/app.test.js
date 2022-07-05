@@ -82,9 +82,9 @@ describe('GET Reviews by id', () => {
             .get("/api/reviews/1000")
             .expect(404)
             .then(({
-                res
+                body
             }) => {
-                expect(res.text)
+                expect(body.msg)
                     .toBe("Sorry Review cant be found")
             })
     });
@@ -95,7 +95,6 @@ describe('GET Reviews by id', () => {
             .then(({
                 body
             }) => {
-                console.log(body.msg)
                 expect(body.msg)
                     .toBe("Sorry incorrect input")
             })
@@ -118,8 +117,75 @@ describe('PATCH reviews/id', () => {
             .then(({
                 body
             }) => {
-                expect(body.votes).toBe(2)
+
+                expect(body.review.votes).toBe(2)
             })
+    })
+    test('when passed a neg vote obj increase the current votes by amount stated', () => {
+
+        const vote = {
+            inc_votes: -1
+        }
+
+
+        return request(app)
+            .patch("/api/reviews/1")
+            .send(vote)
+            .expect(200)
+            .then(({
+                body
+            }) => {
+                expect(body.review.votes).toBe(0)
+            })
+    })
+    test('when passed an invalid id return 404', () => {
+        const vote = {
+            inc_votes: 1
+        }
+
+        return request(app)
+            .get("/api/reviews/1000")
+            .send(vote)
+            .expect(404)
+            .then(({
+                body
+            }) => {
+                expect(body.msg)
+                    .toBe("Sorry Review cant be found")
+            })
+    });
+    test('when passed incorrect data type for id', () => {
+        const vote = {
+            inc_votes: 1
+        }
+
+        return request(app)
+            .patch("/api/reviews/wrong")
+            .send(vote)
+            .expect(400)
+            .then(({
+                body
+            }) => {
+                expect(body.msg)
+                    .toBe("Sorry incorrect input")
+            })
+
+    })
+    test('when passed incorrect data type for inc_votes', () => {
+        const vote = {
+            inc_votes: "yes"
+        }
+
+        return request(app)
+            .patch("/api/reviews/1")
+            .send(vote)
+            .expect(400)
+            .then(({
+                body
+            }) => {
+                expect(body.msg).toBe("Sorry incorrect datatype for votes")
+            })
+
     })
 })
 

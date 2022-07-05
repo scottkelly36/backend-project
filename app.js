@@ -5,11 +5,13 @@ const {
     getCategories,
 } = require('./controllers/categories.controllers');
 
+//reviews controllers
 const {
     getReviewById,
     patchReviewVotes
 } = require('./controllers/reviews.controller');
 
+//errors
 const {
     getUsers
 } = require('./controllers/users.controllers');
