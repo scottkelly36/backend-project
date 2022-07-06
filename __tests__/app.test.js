@@ -247,6 +247,43 @@ describe('GET /api/reviews/id -comment_count', () => {
                     .toBe("Sorry Review cant be found")
             })
     });
+<<<<<<< HEAD
+});
+
+describe('Get /api/reviews', () => {
+    test('200 get all reviews', () => {
+        return request(app)
+            .get("/api/reviews")
+            .expect(200)
+            .then(({
+                body
+            }) => {
+                expect(body.reviews).not.toHaveLength(0);
+                body.reviews.forEach((review) => {
+                    expect(review).toHaveProperty("owner");
+                    expect(review).toHaveProperty("title");
+                    expect(review).toHaveProperty("review_id");
+                    expect(review).toHaveProperty("category");
+                    expect(review).toHaveProperty("review_img_url");
+                    expect(review).toHaveProperty("created_at");
+                    expect(review).toHaveProperty("votes");
+                    expect(review).toHaveProperty("review_body");
+                    expect(review).toHaveProperty("designer");
+                    expect(review).toHaveProperty("comment_count");
+                })
+            })
+    });
+    test('when spelling is incorrect return 404', () => {
+        return request(app)
+            .get("/api/re")
+            .expect(404)
+            .then(({
+                body
+            }) => {
+                expect(body.msg).toBe("Sorry we cant find that end point")
+            })
+    });
+=======
     test('when passed incorrect data type', () => {
         return request(app)
             .get("/api/reviews/wrong")
@@ -259,4 +296,5 @@ describe('GET /api/reviews/id -comment_count', () => {
             })
 
     })
+>>>>>>> 520e7e4bdc949d94d828a7dea53f7d861808b8a6
 });
