@@ -1,5 +1,6 @@
 const DB = require("../db/connection");
 
+
 exports.selectReviewById = (id) => {
 
     return DB.query(`
@@ -52,14 +53,6 @@ exports.updateReviewVotes = (id, body) => {
 
 exports.selectReviewComments = (id) => {
     return DB.query(`SELECT * FROM comments WHERE review_id =$1`, [id]).then((result) => {
-        console.log(result)
-        if (result.rows.length === 0) {
-            return Promise.reject({
-                status: 404,
-                msg: "Sorry Review cant be found"
-            })
-        }
-
         return result.rows;
     })
 }

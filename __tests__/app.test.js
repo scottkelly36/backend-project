@@ -257,6 +257,7 @@ describe('GET comments with review id', () => {
             .then(({
                 body
             }) => {
+                console.log(body)
                 expect(body.comments).not.toHaveLength(0);
                 body.comments.forEach((comment) => {
                     expect(comment).toHaveProperty("comment_id");
@@ -273,21 +274,22 @@ describe('GET comments with review id', () => {
         return request(app)
             .get("/api/reviews/1/comments")
             .expect(200)
-            .then((
+            .then(({
                 body
-            ) => {
+            }) => {
                 console.log(body)
+                expect(body.comments).toHaveLength(0);
             })
     })
-});
-test('400 review cant be found', () => {
-    return request(app)
-        .get("/api/reviews/1000/comments")
-        .expect(404)
-        .then((
-            body
-        ) => {
-            console.log(body)
-            expect(body.msg).toBe("Sorry Review cant be found")
-        })
+    test('404 review cant be found', () => {
+        return request(app)
+            .get("/api/reviews/1000/comments")
+            .expect(404)
+            .then(({
+                body
+            }) => {
+
+                expect(body.msg).toBe("Sorry Review cant be found")
+            })
+    });
 });
