@@ -42,5 +42,7 @@ exports.getReviewComments = (req, res, next) => {
         res.status(200).send({
             comments
         })
+    }).catch((err) => {
+        next(err)
     })
 }

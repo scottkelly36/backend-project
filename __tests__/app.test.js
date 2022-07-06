@@ -269,4 +269,24 @@ describe('GET comments with review id', () => {
                 })
             })
     });
+    test('404 if no comments cant be found', () => {
+        return request(app)
+            .get("/api/reviews/1/comments")
+            .expect(404)
+            .then(({
+                body
+            }) => {
+                expect(body.msg).toBe("Sorry no comments for this review")
+            })
+    });
+    test('400 review cant be found', () => {
+        return request(app)
+            .get("/api/reviews/1000/comments")
+            .expect(404)
+            .then(({
+                body
+            }) => {
+                expect(body.msg).toBe("Sorry no comments for this review")
+            })
+    });
 })
