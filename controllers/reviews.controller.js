@@ -1,12 +1,11 @@
 const {
     selectReviewById,
     updateReviewVotes,
-    <<
-    << << < HEAD
-    selectReviewComments ===
-    === =
-    selectReviews >>>
-    >>> > 4 a05994317e584250c26a284d2dedafd320bf0a8
+
+    selectReviewComments,
+
+    selectReviews
+
 } = require('../models/review.model');
 
 
