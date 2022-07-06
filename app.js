@@ -9,7 +9,7 @@ const {
 const {
     getReviewById,
     patchReviewVotes,
-    getReviews
+    getReviewComments
 } = require('./controllers/reviews.controller');
 
 //errors
@@ -33,7 +33,7 @@ app.get('/api/categories', getCategories);
 
 app.get('/api/reviews/:review_id', getReviewById);
 app.patch('/api/reviews/:review_id', patchReviewVotes);
-app.get('/api/reviews', getReviews);
+app.get('/api/reviews/:review_id/comments', getReviewComments);
 
 app.get('/api/users', getUsers);
 

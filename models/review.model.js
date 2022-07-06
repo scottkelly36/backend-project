@@ -1,5 +1,6 @@
 const DB = require("../db/connection");
 
+
 exports.selectReviewById = (id) => {
 
     return DB.query(`
@@ -50,22 +51,8 @@ exports.updateReviewVotes = (id, body) => {
     })
 }
 
-exports.selectReviews = () => {
-    return DB.query(`
-    SELECT reviews.*, COUNT(comments.*) AS comment_count 
-    FROM reviews
-    LEFT JOIN comments ON
-    reviews.review_id = comments.review_id
-    GROUP BY reviews.review_id`)
-        .then((result) => {
-            if (result.rows.length === 0) {
-                return Promise.reject({
-                    status: 404,
-                    msg: "sorry no reviews can be found"
-                })
-            } else {
-                return result.rows;
-            }
-
-        })
+exports.selectReviewComments = (id) => {
+    return DB.query(`SELECT * FROM comments WHERE review_id =$1`, [id]).then((result) => {
+        return result.rows;
+    })
 }
