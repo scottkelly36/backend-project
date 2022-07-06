@@ -247,7 +247,6 @@ describe('GET /api/reviews/id -comment_count', () => {
                     .toBe("Sorry Review cant be found")
             })
     });
-<<<<<<< HEAD
 });
 
 describe('Get /api/reviews', () => {
@@ -283,18 +282,4 @@ describe('Get /api/reviews', () => {
                 expect(body.msg).toBe("Sorry we cant find that end point")
             })
     });
-=======
-    test('when passed incorrect data type', () => {
-        return request(app)
-            .get("/api/reviews/wrong")
-            .expect(400)
-            .then(({
-                body
-            }) => {
-                expect(body.msg)
-                    .toBe("Sorry incorrect input")
-            })
-
-    })
->>>>>>> 520e7e4bdc949d94d828a7dea53f7d861808b8a6
 });
