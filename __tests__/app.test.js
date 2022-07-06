@@ -231,3 +231,25 @@ describe('Get all users', () => {
             })
     });
 });
+
+describe('GET comments with review id', () => {
+    test('200 return a filled array', () => {
+        return request(app)
+            .get("/api/reviews/2/comments")
+            .expect(200)
+            .then(({
+                body
+            }) => {
+                expect(body.comments).not.toHaveLength(0);
+                body.comments.forEach((comment) => {
+                    expect(comment).toHaveProperty("comment_id");
+                    expect(comment).toHaveProperty("votes");
+                    expect(comment).toHaveProperty("created_at");
+                    expect(comment).toHaveProperty("author");
+                    expect(comment).toHaveProperty("body");
+                    expect(comment).toHaveProperty("review_id");
+
+                })
+            })
+    });
+})

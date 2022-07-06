@@ -39,3 +39,9 @@ exports.updateReviewVotes = (id, body) => {
 
     })
 }
+
+exports.selectReviewComments = (id) => {
+    return DB.query(`SELECT * FROM comments WHERE review_id =$1`, [id]).then((result) => {
+        return result.rows;
+    })
+}
