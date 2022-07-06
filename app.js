@@ -9,7 +9,8 @@ const {
 const {
     getReviewById,
     patchReviewVotes,
-    getReviewComments
+    getReviewComments,
+    postReviewComment
 } = require('./controllers/reviews.controller');
 
 //errors
@@ -34,6 +35,7 @@ app.get('/api/categories', getCategories);
 app.get('/api/reviews/:review_id', getReviewById);
 app.patch('/api/reviews/:review_id', patchReviewVotes);
 app.get('/api/reviews/:review_id/comments', getReviewComments);
+app.post('/api/reviews/:review_id/comments', postReviewComment);
 
 app.get('/api/users', getUsers);
 

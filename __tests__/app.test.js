@@ -293,3 +293,83 @@ describe('GET comments with review id', () => {
             })
     });
 });
+
+describe('Post add new comment review', () => {
+    test('201 new comment was added', () => {
+        const newComment = {
+            username: 'mallionaire',
+            body: "I didn't know dogs could play games"
+        }
+        return request(app)
+            .post("/api/reviews/1/comments")
+            .send(newComment)
+            .expect(201)
+            .then(({
+                body
+            }) => {
+                expect(body.msg).toBe('Comment posted')
+            })
+
+
+    });
+    test('200 check new comment added properly', () => {
+        const newComment = {
+            username: 'mallionaire',
+            body: "I didn't know dogs could play games"
+        }
+        Promise.resolve(
+            request(app)
+            .post("/api/reviews/1/comments")
+            .send(newComment)
+        )
+        return request(app)
+            .get("/api/reviews/1/comments")
+            .expect(200)
+            .then(({
+                body
+            }) => {
+                expect(body.comments).toHaveLength(1)
+                body.comments.forEach((comment) => {
+                    expect(comment).toHaveProperty("comment_id")
+                    expect(comment).toHaveProperty("body")
+                    expect(comment).toHaveProperty("votes")
+                    expect(comment).toHaveProperty("author")
+                    expect(comment).toHaveProperty("created_at")
+                    expect(comment).toHaveProperty("review_id")
+                })
+            })
+
+    });
+    test('400 if passed the wrong datatype for body', () => {
+        const newComment = {
+            username: 'mallionaire',
+            body: 100
+        }
+        return request(app)
+            .post("/api/reviews/1/comments")
+            .send(newComment)
+            .expect(400)
+            .then(({
+                body
+            }) => {
+                expect(body.msg).toBe("Body has to be string")
+            })
+
+    })
+    test('400 username is not registered', () => {
+        const newComment = {
+            username: 'mallionaire',
+            body: 100
+        }
+        return request(app)
+            .post("/api/reviews/1/comments")
+            .send(newComment)
+            .expect(401)
+            .then(({
+                body
+            }) => {
+                expect(body.msg).toBe("Your not registered please sign up to comment")
+            })
+
+    })
+});

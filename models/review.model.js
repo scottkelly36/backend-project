@@ -56,3 +56,28 @@ exports.selectReviewComments = (id) => {
         return result.rows;
     })
 }
+
+exports.insertReviewComment = (data, id) => {
+    const {
+        username,
+        body
+    } = data
+    const created = new Date();
+
+    if (typeof body !== "string") {
+        return Promise.reject({
+            status: 400,
+            msg: 'Body has to be string'
+        })
+    }
+
+    return DB.query(`INSERT INTO comments
+    (body, votes, author, review_id, created_at)
+    VALUES
+    ($1, $2, $3, $4, $5)
+    RETURNING *`, [body, 0, username, id, created]).then((result) => {
+        return result.rows;
+    })
+
+
+}

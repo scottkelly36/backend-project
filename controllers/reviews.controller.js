@@ -2,7 +2,8 @@ const {
     selectReviewById,
     updateReviewVotes,
     selectReviewComments,
-    selectReviews
+    selectReviews,
+    insertReviewComment
 
 } = require('../models/review.model');
 
@@ -52,4 +53,23 @@ exports.getReviewComments = (req, res, next) => {
         .catch((err) => {
             next(err)
         })
+}
+
+exports.postReviewComment = (req, res, next) => {
+    const body = req.body;
+    const {
+        review_id
+    } = req.params;
+
+    insertReviewComment(body, review_id).then((newComment) => {
+        if (newComment.length === 1) {
+            res.status(201).send({
+                msg: 'Comment posted'
+            })
+        }
+    }).catch((err) => {
+        next(err)
+
+    });
+
 }
