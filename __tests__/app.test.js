@@ -257,7 +257,7 @@ describe('GET comments with review id', () => {
             .then(({
                 body
             }) => {
-                console.log(body)
+
                 expect(body.comments).not.toHaveLength(0);
                 body.comments.forEach((comment) => {
                     expect(comment).toHaveProperty("comment_id");
@@ -277,7 +277,7 @@ describe('GET comments with review id', () => {
             .then(({
                 body
             }) => {
-                console.log(body)
+
                 expect(body.comments).toHaveLength(0);
             })
     })
