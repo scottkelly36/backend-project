@@ -189,47 +189,65 @@ describe('PATCH reviews/id', () => {
     })
 })
 
-describe('Get all users', () => {
-    test('return all users and a status of 200', () => {
+describe('GET /api/reviews/id -comment_count', () => {
+    test('return a review obj with comment count', () => {
         return request(app)
-            .get('/api/users')
+            .get("/api/reviews/1")
             .expect(200)
             .then(({
                 body
             }) => {
-                expect(body.users).not.toHaveLength(0);
-                body.users.forEach((user) => {
-                    expect(user).toHaveProperty("username");
-                    expect(user).toHaveProperty("name");
-                    expect(user).toHaveProperty("avatar_url")
-                })
+                expect(body.review.comment_count).toBe("0")
             })
     });
-    test('make sure te data coming back is correct types', () => {
+    test('return a review obj checking for whole obj', () => {
         return request(app)
-            .get('/api/users')
+            .get("/api/reviews/1")
             .expect(200)
             .then(({
                 body
             }) => {
-                expect(body.users).not.toHaveLength(0);
-                body.users.forEach((user) => {
-                    expect(typeof user.username).toBe("string");
-                    expect(typeof user.name).toBe("string");
-                    expect(typeof user.avatar_url).toBe("string")
-                })
+                expect(body.review.review_id).toBe(1)
+                expect(body.review.title).toBe('Agricola')
+                expect(body.review.designer).toBe('Uwe Rosenberg')
+                expect(body.review.owner).toBe('mallionaire')
+                expect(body.review.review_img_url).toBe('https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png')
+                expect(body.review.review_body).toBe('Farmyard fun!')
+                expect(body.review.category).toBe('euro game')
+                expect(body.review.votes).toBe(1)
+                expect(body.review.comment_count).toBe("0")
             })
     });
-    test('when spelling is incorrect return 404', () => {
+    test('test a different id', () => {
         return request(app)
-            .get("/api/user")
+            .get("/api/reviews/2")
+            .expect(200)
+            .then(({
+                body
+            }) => {
+                expect(body.review.review_id).toBe(2)
+                expect(body.review.title).toBe('Jenga')
+                expect(body.review.designer).toBe('Leslie Scott')
+                expect(body.review.owner).toBe('philippaclaire9')
+                expect(body.review.review_img_url).toBe('https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png')
+                expect(body.review.review_body).toBe('Fiddly fun for all the family')
+                expect(body.review.category).toBe('dexterity')
+                expect(body.review.votes).toBe(5)
+                expect(body.review.comment_count).toBe("3")
+            })
+    });
+    test('when passed a number that doesnt exist return 404', () => {
+        return request(app)
+            .get("/api/reviews/1000")
             .expect(404)
             .then(({
                 body
             }) => {
-                expect(body.msg).toBe("Sorry we cant find that end point")
+                expect(body.msg)
+                    .toBe("Sorry Review cant be found")
             })
     });
+<<<<<<< HEAD
 });
 
 describe('GET comments with review id', () => {
@@ -253,3 +271,18 @@ describe('GET comments with review id', () => {
             })
     });
 })
+=======
+    test('when passed incorrect data type', () => {
+        return request(app)
+            .get("/api/reviews/wrong")
+            .expect(400)
+            .then(({
+                body
+            }) => {
+                expect(body.msg)
+                    .toBe("Sorry incorrect input")
+            })
+
+    })
+});
+>>>>>>> 520e7e4bdc949d94d828a7dea53f7d861808b8a6
