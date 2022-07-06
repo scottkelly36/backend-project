@@ -1,11 +1,12 @@
 const {
     selectReviewById,
     updateReviewVotes,
-<<<<<<< HEAD
-    selectReviewComments
-=======
-    selectReviews
->>>>>>> 4a05994317e584250c26a284d2dedafd320bf0a8
+    <<
+    << << < HEAD
+    selectReviewComments ===
+    === =
+    selectReviews >>>
+    >>> > 4 a05994317e584250c26a284d2dedafd320bf0a8
 } = require('../models/review.model');
 
 
@@ -38,7 +39,6 @@ exports.patchReviewVotes = (req, res, next) => {
     })
 }
 
-<<<<<<< HEAD
 exports.getReviewComments = (req, res, next) => {
     const {
         review_id
@@ -46,12 +46,6 @@ exports.getReviewComments = (req, res, next) => {
     selectReviewComments(review_id).then((comments) => {
         res.status(200).send({
             comments
-=======
-exports.getReviews = (req, res, next) => {
-    selectReviews().then((reviews) => {
-        res.status(200).send({
-            reviews
->>>>>>> 4a05994317e584250c26a284d2dedafd320bf0a8
         })
     }).catch((err) => {
         next(err)
