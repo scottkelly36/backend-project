@@ -52,10 +52,11 @@ exports.updateReviewVotes = (id, body) => {
 
 exports.selectReviewComments = (id) => {
     return DB.query(`SELECT * FROM comments WHERE review_id =$1`, [id]).then((result) => {
+        console.log(result)
         if (result.rows.length === 0) {
             return Promise.reject({
                 status: 404,
-                msg: "Sorry no comments for this review"
+                msg: "Sorry Review cant be found"
             })
         }
 

@@ -269,24 +269,25 @@ describe('GET comments with review id', () => {
                 })
             })
     });
-    test('404 if no comments cant be found', () => {
+    test('200 but return an empty arr review found but no comments', () => {
         return request(app)
             .get("/api/reviews/1/comments")
-            .expect(404)
-            .then(({
+            .expect(200)
+            .then((
                 body
-            }) => {
-                expect(body.msg).toBe("Sorry no comments for this review")
+            ) => {
+                console.log(body)
             })
-    });
-    test('400 review cant be found', () => {
-        return request(app)
-            .get("/api/reviews/1000/comments")
-            .expect(404)
-            .then(({
-                body
-            }) => {
-                expect(body.msg).toBe("Sorry no comments for this review")
-            })
-    });
-})
+    })
+});
+test('400 review cant be found', () => {
+    return request(app)
+        .get("/api/reviews/1000/comments")
+        .expect(404)
+        .then((
+            body
+        ) => {
+            console.log(body)
+            expect(body.msg).toBe("Sorry Review cant be found")
+        })
+});
