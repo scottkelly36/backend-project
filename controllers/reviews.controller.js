@@ -59,6 +59,24 @@ exports.getReviewComments = (req, res, next) => {
             next(err);
         });
 };
+exports.getReviews = (req, res, next) => {
+    const {
+        sort_by,
+        order,
+        category
+    } = req.query;
+
+
+    selectReviews(sort_by, order, category)
+        .then((reviews) => {
+            res.status(200).send({
+                reviews
+            });
+        })
+        .catch((err) => {
+            next(err);
+        });
+};
 
 exports.postReviewComment = (req, res, next) => {
     const body = req.body;

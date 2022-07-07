@@ -15,7 +15,7 @@ exports.selectReviewById = (id) => {
     if (result.rows.length === 0) {
       return Promise.reject({
         status: 404,
-        msg: "Sorry Review cant be found",
+        msg: "Sorry review cant be found",
       });
     } else {
       return result.rows[0];
@@ -41,7 +41,7 @@ exports.updateReviewVotes = (id, body) => {
     if (result.rows.length === 0) {
       return Promise.reject({
         status: 404,
-        msg: "Sorry Review cant be found",
+        msg: "Sorry review cant be found",
       });
     } else {
       return result.rows[0];

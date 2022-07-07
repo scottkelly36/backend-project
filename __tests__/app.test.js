@@ -343,17 +343,3 @@ describe("Post add new comment review", () => {
             });
     });
 });
-
-describe('DELETE /api/', () => {
-    test('when passed an valid comment id ', () => {
-        return request(app)
-            .delete("/api/comments/1")
-            .expect(204)
-            .then(({
-                body
-            }) => {
-                console.log(body)
-                expect(body).toBe({})
-            });
-    });
-});
