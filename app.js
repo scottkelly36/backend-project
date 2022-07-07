@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 
+//categories controllers
 const {
     getCategories,
 } = require('./controllers/categories.controllers');
@@ -13,11 +14,17 @@ const {
     postReviewComment
 } = require('./controllers/reviews.controller');
 
-//errors
+//users controllers
 const {
     getUsers
 } = require('./controllers/users.controllers');
 
+//comment controllers
+const {
+    deleteComment
+} = require('./controllers/comments.controller');
+
+//errors
 const {
     handleServerErrors,
     handleWrongEndpoint,
@@ -38,6 +45,8 @@ app.get('/api/reviews/:review_id/comments', getReviewComments);
 app.post('/api/reviews/:review_id/comments', postReviewComment);
 
 app.get('/api/users', getUsers);
+
+app.delete('/api/comments/:comment_id', deleteComment);
 
 
 app.use('*', (req, res) => {
