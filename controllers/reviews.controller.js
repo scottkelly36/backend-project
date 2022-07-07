@@ -73,3 +73,34 @@ exports.getReviews = (req, res, next) => {
             next(err);
         });
 };
+
+exports.postReviewComment = (req, res, next) => {
+    const body = req.body;
+    const {
+        review_id
+    } = req.params;
+
+    const checkReviewId = selectReviewById(review_id);
+    const checkUser = checkExists("users", "username", body.username);
+
+    Promise.all([checkReviewId, checkUser])
+        .then((values) => {
+            return values[1];
+        })
+        .then((result) => {
+            if (result > 0 && typeof body.body === "string") {
+                insertReviewComment(body, review_id).then((newComment) => {
+                    res.status(201).send({
+                        comment: newComment
+                    });
+                });
+            } else {
+                res.status(400).send({
+                    msg: "incorrect input"
+                });
+            }
+        })
+        .catch((err) => {
+            next(err);
+        });
+};

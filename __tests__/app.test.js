@@ -283,6 +283,7 @@ describe("Get /api/reviews?sortby", () => {
             .then(({
                 body
             }) => {
+                expect(body.reviews).toBeSortedBy("created_at");
                 expect(body.reviews).not.toHaveLength(0);
                 body.reviews.forEach((review) => {
                     expect(review).toHaveProperty("review_id");
@@ -297,16 +298,18 @@ describe("Get /api/reviews?sortby", () => {
                 });
             });
     });
-    test("sort reviews by date by default and asc by default", () => {
+
+    test("check non default values", () => {
         return request(app)
-            .get("/api/reviews")
+            .get("/api/reviews?sort_by=review_id")
             .expect(200)
             .then(({
                 body
             }) => {
-                expect(body.reviews).toBeSortedBy("created_at");
+                expect(body.reviews).toBeSortedBy("review_id");
             });
     });
+
     test("check non default values", () => {
         return request(app)
             .get("/api/reviews?sort_by=review_id&order=DESC")
@@ -319,6 +322,8 @@ describe("Get /api/reviews?sortby", () => {
                 });
             });
     });
+
+
     test("when passed a category match category to reviews", () => {
         return request(app)
             .get("/api/reviews?category=euro+game")

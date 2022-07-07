@@ -58,6 +58,7 @@ exports.selectReviewComments = (id) => {
 };
 
 exports.selectReviews = (sort_by = "created_at", order = "ASC", category) => {
+
   const queryValues = [];
   const validSortBy = [
     "created_at",
@@ -68,7 +69,7 @@ exports.selectReviews = (sort_by = "created_at", order = "ASC", category) => {
     "votes",
     "category",
   ];
-  const validOrder = ["ASC", "asc", "DESC", "desc"];
+  const validOrder = ["ASC", "DESC"];
 
   if (!validSortBy.includes(sort_by)) {
     return Promise.reject({
