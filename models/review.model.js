@@ -24,7 +24,9 @@ exports.selectReviewById = (id) => {
 };
 
 exports.updateReviewVotes = (id, body) => {
-  const { inc_votes } = body;
+  const {
+    inc_votes
+  } = body;
   if (typeof inc_votes !== "number") {
     return Promise.reject({
       status: 400,
@@ -95,7 +97,10 @@ exports.selectReviews = (sort_by = "created_at", order = "ASC", category) => {
 
   return DB.query(queryString, queryValues).then((results) => {
     if (results.rows.length === 0) {
-      return Promise.reject({ status: 404, msg: "No reviews found" });
+      return Promise.reject({
+        status: 404,
+        msg: "No reviews found"
+      });
     } else {
       return results.rows;
     }
