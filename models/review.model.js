@@ -59,6 +59,8 @@ exports.selectReviewComments = (id) => {
 
 exports.selectReviews = (sort_by = "created_at", order = "ASC", category) => {
 
+
+
   const queryValues = [];
   const validSortBy = [
     "created_at",
@@ -78,7 +80,7 @@ exports.selectReviews = (sort_by = "created_at", order = "ASC", category) => {
     });
   }
 
-  if (!validOrder.includes(order)) {
+  if (!validOrder.includes(order.toUpperCase())) {
     return Promise.reject({
       status: 400,
       msg: "Invalid order",

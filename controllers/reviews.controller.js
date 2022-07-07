@@ -64,6 +64,7 @@ exports.getReviews = (req, res, next) => {
         category
     } = req.query;
 
+
     selectReviews(sort_by, order, category)
         .then((reviews) => {
             res.status(200).send({

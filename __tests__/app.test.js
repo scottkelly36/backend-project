@@ -299,7 +299,7 @@ describe("Get /api/reviews?sortby", () => {
             });
     });
 
-    test("check non default values", () => {
+    test("check non default values sort_by", () => {
         return request(app)
             .get("/api/reviews?sort_by=review_id")
             .expect(200)
@@ -310,7 +310,20 @@ describe("Get /api/reviews?sortby", () => {
             });
     });
 
-    test("check non default values", () => {
+    test("check non default values order", () => {
+        return request(app)
+            .get("/api/reviews?order=DESC")
+            .expect(200)
+            .then(({
+                body
+            }) => {
+                expect(body.reviews).toBeSortedBy("created_at", {
+                    descending: true
+                });
+            });
+    });
+
+    test("check non default values together", () => {
         return request(app)
             .get("/api/reviews?sort_by=review_id&order=DESC")
             .expect(200)
@@ -341,6 +354,17 @@ describe("Get /api/reviews?sortby", () => {
     test("when passed a category with no matches", () => {
         return request(app)
             .get("/api/reviews?category=yyy")
+            .expect(404)
+            .then(({
+                body
+            }) => {
+                expect(body.msg).toBe("No reviews found");
+            });
+    });
+
+    test("when passed a category that exists with no matches", () => {
+        return request(app)
+            .get("/api/reviews?category=children's+games")
             .expect(404)
             .then(({
                 body
