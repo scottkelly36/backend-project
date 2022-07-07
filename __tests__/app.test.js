@@ -343,3 +343,122 @@ describe("Post add new comment review", () => {
             });
     });
 });
+describe("Get /api/reviews?sortby", () => {
+    test("200 returns all reviews with no query", () => {
+        return request(app)
+            .get("/api/reviews")
+            .expect(200)
+            .then(({
+                body
+            }) => {
+                expect(body.reviews).toBeSortedBy("created_at");
+                expect(body.reviews).not.toHaveLength(0);
+                body.reviews.forEach((review) => {
+                    expect(review).toHaveProperty("review_id");
+                    expect(review).toHaveProperty("title");
+                    expect(review).toHaveProperty("designer");
+                    expect(review).toHaveProperty("owner");
+                    expect(review).toHaveProperty("review_img_url");
+                    expect(review).toHaveProperty("review_body");
+                    expect(review).toHaveProperty("category");
+                    expect(review).toHaveProperty("votes");
+                    expect(review).toHaveProperty("created_at");
+                });
+            });
+    });
+
+    test("check non default values sort_by", () => {
+        return request(app)
+            .get("/api/reviews?sort_by=review_id")
+            .expect(200)
+            .then(({
+                body
+            }) => {
+                expect(body.reviews).toBeSortedBy("review_id");
+            });
+    });
+
+    test("check non default values order", () => {
+        return request(app)
+            .get("/api/reviews?order=DESC")
+            .expect(200)
+            .then(({
+                body
+            }) => {
+                expect(body.reviews).toBeSortedBy("created_at", {
+                    descending: true
+                });
+            });
+    });
+
+    test("check non default values together", () => {
+        return request(app)
+            .get("/api/reviews?sort_by=review_id&order=DESC")
+            .expect(200)
+            .then(({
+                body
+            }) => {
+                expect(body.reviews).toBeSortedBy("review_id", {
+                    descending: true
+                });
+            });
+    });
+
+
+    test("when passed a category match category to reviews", () => {
+        return request(app)
+            .get("/api/reviews?category=euro+game")
+            .expect(200)
+            .then(({
+                body
+            }) => {
+                expect(body.reviews).toBeSortedBy("created_at");
+                expect(body.reviews).toHaveLength(1);
+                body.reviews.forEach((review) => {
+                    expect(review.category).toBe("euro game");
+                });
+            });
+    });
+    test("when passed a category with no matches", () => {
+        return request(app)
+            .get("/api/reviews?category=yyy")
+            .expect(404)
+            .then(({
+                body
+            }) => {
+                expect(body.msg).toBe("No reviews found");
+            });
+    });
+
+    test("when passed a category that exists with no matches", () => {
+        return request(app)
+            .get("/api/reviews?category=children's+games")
+            .expect(404)
+            .then(({
+                body
+            }) => {
+                expect(body.msg).toBe("No reviews found");
+            });
+    });
+
+    test("400 invalid sort_by ", () => {
+        return request(app)
+            .get("/api/reviews?sort_by=face")
+            .expect(400)
+            .then(({
+                body
+            }) => {
+                expect(body.msg).toBe("Invalid sort_by");
+            });
+    });
+    test("400 invalid sort_by ", () => {
+        return request(app)
+            .get("/api/reviews?order=kk")
+            .expect(400)
+            .then(({
+                body
+            }) => {
+                expect(body.msg).toBe("Invalid order");
+            });
+    });
+});
