@@ -1,5 +1,4 @@
 const DB = require("../db/connection");
-const { checkExists } = require("../utils/utils");
 
 exports.selectReviewById = (id) => {
   return DB.query(
@@ -16,7 +15,7 @@ exports.selectReviewById = (id) => {
     if (result.rows.length === 0) {
       return Promise.reject({
         status: 404,
-        msg: "Sorry review cant be found",
+        msg: "Sorry Review cant be found",
       });
     } else {
       return result.rows[0];
@@ -25,7 +24,9 @@ exports.selectReviewById = (id) => {
 };
 
 exports.updateReviewVotes = (id, body) => {
-  const { inc_votes } = body;
+  const {
+    inc_votes
+  } = body;
   if (typeof inc_votes !== "number") {
     return Promise.reject({
       status: 400,
@@ -40,7 +41,7 @@ exports.updateReviewVotes = (id, body) => {
     if (result.rows.length === 0) {
       return Promise.reject({
         status: 404,
-        msg: "Sorry review cant be found",
+        msg: "Sorry Review cant be found",
       });
     } else {
       return result.rows[0];
@@ -56,8 +57,64 @@ exports.selectReviewComments = (id) => {
   );
 };
 
+exports.selectReviews = (sort_by = "created_at", order = "ASC", category) => {
+
+
+
+  const queryValues = [];
+  const validSortBy = [
+    "created_at",
+    "review_id",
+    "title",
+    "designer",
+    "owner",
+    "votes",
+    "category",
+  ];
+  const validOrder = ["ASC", "DESC"];
+
+  if (!validSortBy.includes(sort_by)) {
+    return Promise.reject({
+      status: 400,
+      msg: "Invalid sort_by",
+    });
+  }
+
+  if (!validOrder.includes(order.toUpperCase())) {
+    return Promise.reject({
+      status: 400,
+      msg: "Invalid order",
+    });
+  }
+
+  let queryString = `SELECT * FROM reviews`;
+
+  if (category) {
+    queryValues.push(category);
+    queryString += ` WHERE category = $${queryValues.length}`;
+  }
+
+  if (sort_by || order) {
+    queryString += ` ORDER BY ${sort_by} ${order}`;
+  }
+
+  return DB.query(queryString, queryValues).then((results) => {
+    if (results.rows.length === 0) {
+      return Promise.reject({
+        status: 404,
+        msg: "No reviews found"
+      });
+    } else {
+      return results.rows;
+    }
+  });
+};
+
 exports.insertReviewComment = (data, id) => {
-  const { username, body } = data;
+  const {
+    username,
+    body
+  } = data;
   const created = new Date();
 
   return DB.query(`SELECT * FROM reviews WHERE review_id = $1`, [id])
