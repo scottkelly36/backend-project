@@ -234,46 +234,7 @@ describe("GET /api/reviews/id -comment_count", () => {
     });
 });
 
-describe("GET comments with review id", () => {
-    test("200 return a filled array", () => {
-        return request(app)
-            .get("/api/reviews/2/comments")
-            .expect(200)
-            .then(({
-                body
-            }) => {
-                expect(body.comments).not.toHaveLength(0);
-                body.comments.forEach((comment) => {
-                    expect(comment).toHaveProperty("comment_id");
-                    expect(comment).toHaveProperty("votes");
-                    expect(comment).toHaveProperty("created_at");
-                    expect(comment).toHaveProperty("author");
-                    expect(comment).toHaveProperty("body");
-                    expect(comment).toHaveProperty("review_id");
-                });
-            });
-    });
-    test("200 but return an empty arr review found but no comments", () => {
-        return request(app)
-            .get("/api/reviews/1/comments")
-            .expect(200)
-            .then(({
-                body
-            }) => {
-                expect(body.comments).toHaveLength(0);
-            });
-    });
-    test("404 review cant be found", () => {
-        return request(app)
-            .get("/api/reviews/1000/comments")
-            .expect(404)
-            .then(({
-                body
-            }) => {
-                expect(body.msg).toBe("Sorry Review cant be found");
-            });
-    });
-});
+
 
 describe("Get /api/reviews?sortby", () => {
     test("200 returns all reviews with no query", () => {
