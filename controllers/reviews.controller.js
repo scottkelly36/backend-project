@@ -3,6 +3,7 @@ const {
     updateReviewVotes,
     selectReviewComments,
     selectReviews,
+    insertReviewComment
 } = require("../models/review.model");
 
 exports.getReviewById = (req, res, next) => {

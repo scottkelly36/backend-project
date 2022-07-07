@@ -107,3 +107,35 @@ exports.selectReviews = (sort_by = "created_at", order = "ASC", category) => {
     }
   });
 };
+
+exports.insertReviewComment = (data, id) => {
+  const {
+    username,
+    body
+  } = data;
+  const created = new Date();
+
+  return DB.query(`SELECT * FROM reviews WHERE review_id = $1`, [id])
+    .then((result) => {
+      if (result.rowCount === 0) {
+        return Promise.reject({
+          status: 404,
+          msg: "Sorry review cant be found",
+        });
+      } else {
+        return;
+      }
+    })
+    .then(() => {
+      return DB.query(
+        `INSERT INTO comments
+    (body, votes, author, review_id, created_at)
+    VALUES
+    ($1, $2, $3, $4, $5)
+    RETURNING *`,
+        [body, 0, username, id, created]
+      ).then((result) => {
+        return result.rows[0];
+      });
+    });
+};
