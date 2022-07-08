@@ -106,8 +106,6 @@
     "params":[],
     "exampleResponse":{
       "users":[{
-        
-          "user_id" : 1,
           "username": "mallionaire",
           "name": "haz",
           "avatar_url":

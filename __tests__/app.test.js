@@ -68,7 +68,7 @@ describe("GET Reviews by id", () => {
       .get("/api/reviews/1000")
       .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe("Sorry Review cant be found");
+        expect(body.msg).toBe("Sorry review cant be found");
       });
   });
   test("when passed incorrect data type", () => {
@@ -118,7 +118,7 @@ describe("PATCH reviews/id", () => {
       .send(vote)
       .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe("Sorry Review cant be found");
+        expect(body.msg).toBe("Sorry review cant be found");
       });
   });
   test("when passed incorrect data type for id", () => {
@@ -145,6 +145,21 @@ describe("PATCH reviews/id", () => {
       .expect(400)
       .then(({ body }) => {
         expect(body.msg).toBe("Sorry incorrect datatype for votes");
+      });
+  });
+});
+describe("Get /api/users", () => {
+  test("200 return all users", () => {
+    return request(app)
+      .get("/api/users")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.users).toHaveLength(4);
+        body.users.forEach((user) => {
+          expect(user).toHaveProperty("username");
+          expect(user).toHaveProperty("name");
+          expect(user).toHaveProperty("avatar_url");
+        });
       });
   });
 });
@@ -199,7 +214,29 @@ describe("GET /api/reviews/id -comment_count", () => {
       .get("/api/reviews/1000")
       .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe("Sorry Review cant be found");
+        expect(body.msg).toBe("Sorry review cant be found");
+      });
+  });
+});
+
+describe("Get /api/reviews", () => {
+  test("return all reviews", () => {
+    return request(app)
+      .get("/api/reviews")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.reviews).toHaveLength(13);
+        body.reviews.forEach((review) => {
+          expect(review).toHaveProperty("review_id");
+          expect(review).toHaveProperty("title");
+          expect(review).toHaveProperty("owner");
+          expect(review).toHaveProperty("category");
+          expect(review).toHaveProperty("review_img_url");
+          expect(review).toHaveProperty("created_at");
+          expect(review).toHaveProperty("votes");
+          expect(review).toHaveProperty("review_body");
+          expect(review).toHaveProperty("designer");
+        });
       });
   });
 });
@@ -210,7 +247,6 @@ describe("GET comments with review id", () => {
       .get("/api/reviews/2/comments")
       .expect(200)
       .then(({ body }) => {
-        console.log(body);
         expect(body.comments).not.toHaveLength(0);
         body.comments.forEach((comment) => {
           expect(comment).toHaveProperty("comment_id");
@@ -235,7 +271,7 @@ describe("GET comments with review id", () => {
       .get("/api/reviews/1000/comments")
       .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe("Sorry Review cant be found");
+        expect(body.msg).toBe("Sorry review cant be found");
       });
   });
 });
