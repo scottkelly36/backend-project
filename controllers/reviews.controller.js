@@ -3,8 +3,11 @@ const {
     updateReviewVotes,
     selectReviewComments,
     selectReviews,
-    insertReviewComment
+    insertReviewComment,
 } = require("../models/review.model");
+const {
+    checkExists
+} = require("../utils/utils");
 
 exports.getReviewById = (req, res, next) => {
     const {
@@ -56,7 +59,6 @@ exports.getReviewComments = (req, res, next) => {
             next(err);
         });
 };
-
 exports.getReviews = (req, res, next) => {
     const {
         sort_by,
@@ -105,4 +107,5 @@ exports.postReviewComment = (req, res, next) => {
         .catch((err) => {
             next(err);
         });
+
 };
