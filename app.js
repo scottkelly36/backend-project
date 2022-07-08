@@ -1,9 +1,20 @@
 const express = require("express");
 const app = express();
 
-const { getEndpoints } = require("./controllers/misc.controllers");
 
-const { getCategories } = require("./controllers/categories.controllers");
+const {
+  getEndpoints
+} = require("./controllers/misc.controllers");
+
+
+
+//categories controllers
+const {
+  getCategories
+} = require("./controllers/categories.controllers");
+
+
+
 
 //reviews controllers
 const {
@@ -14,9 +25,21 @@ const {
   getReviews,
 } = require("./controllers/reviews.controller");
 
-//errors
-const { getUsers } = require("./controllers/users.controllers");
 
+
+//users controllers
+const {
+  getUsers
+} = require("./controllers/users.controllers");
+
+
+
+//comment controllers
+const {
+  deleteComment
+} = require('./controllers/comments.controllers');
+
+//errors
 const {
   handleServerErrors,
   handleWrongEndpoint,
@@ -35,7 +58,13 @@ app.post("/api/reviews/:review_id/comments", postReviewComment);
 app.get("/api/reviews/:review_id/comments", getReviewComments);
 app.get("/api/reviews", getReviews);
 
-app.get("/api/users", getUsers);
+
+app.get('/api/users', getUsers);
+
+app.delete('/api/comments/:comment_id', deleteComment);
+
+
+
 
 app.use("*", (req, res) => {
   res.status(404).send({

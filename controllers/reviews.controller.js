@@ -1,15 +1,22 @@
 const {
+
   selectReviewById,
   updateReviewVotes,
   selectReviewComments,
   selectReviews,
   insertReviewComment,
+
 } = require("../models/review.model");
 
-const { checkExists } = require("../utils/utils");
+
+const {
+  checkExists
+} = require("../utils/utils");
 
 exports.getReviewById = (req, res, next) => {
-  const { review_id } = req.params;
+  const {
+    review_id
+  } = req.params;
 
   selectReviewById(review_id)
     .then((review) => {
@@ -23,7 +30,9 @@ exports.getReviewById = (req, res, next) => {
 };
 
 exports.patchReviewVotes = (req, res, next) => {
-  const { review_id } = req.params;
+  const {
+    review_id
+  } = req.params;
   const body = req.body;
   updateReviewVotes(review_id, body)
     .then((updatedReview) => {
@@ -37,7 +46,9 @@ exports.patchReviewVotes = (req, res, next) => {
 };
 
 exports.getReviewComments = (req, res, next) => {
-  const { review_id } = req.params;
+  const {
+    review_id
+  } = req.params;
 
   const checkId = selectReviewById(review_id);
   const results = selectReviewComments(review_id);
@@ -52,9 +63,12 @@ exports.getReviewComments = (req, res, next) => {
       next(err);
     });
 };
-
 exports.getReviews = (req, res, next) => {
-  const { sort_by, order, category } = req.query;
+  const {
+    sort_by,
+    order,
+    category
+  } = req.query;
 
   selectReviews(sort_by, order, category)
     .then((reviews) => {
@@ -69,7 +83,9 @@ exports.getReviews = (req, res, next) => {
 
 exports.postReviewComment = (req, res, next) => {
   const body = req.body;
-  const { review_id } = req.params;
+  const {
+    review_id
+  } = req.params;
 
   const checkReviewId = selectReviewById(review_id);
   const checkUser = checkExists("users", "username", body.username);
@@ -85,6 +101,7 @@ exports.postReviewComment = (req, res, next) => {
             comment: newComment,
           });
         });
+
       } else {
         res.status(400).send({
           msg: "incorrect input",
