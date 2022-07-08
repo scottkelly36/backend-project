@@ -210,6 +210,7 @@ describe("GET comments with review id", () => {
       .get("/api/reviews/2/comments")
       .expect(200)
       .then(({ body }) => {
+        console.log(body);
         expect(body.comments).not.toHaveLength(0);
         body.comments.forEach((comment) => {
           expect(comment).toHaveProperty("comment_id");

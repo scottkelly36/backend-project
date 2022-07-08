@@ -33,6 +33,7 @@
   },
   "GET /api/reviews/:review_id":{
     "description" : "serves an array with a single review",
+    "queries":[],
     "params": ["review_id"],
     "exampleResponse":{ 
           "review": {
@@ -53,9 +54,72 @@
 
   "PATCH /api/review/:review_id":{
     "description" : "Updates the votes value on a single review",
+    "queries":[],
     "params" : ["review_id"],
     "exampleRequestBody":{
       "inc_votes" : 10
+    },
+    "exampleResponse":{ 
+      "review": {
+        "review_id": 1,
+        "title": "Agricola",
+        "category": "euro game",
+        "designer": "Uwe Rosenberg",
+        "owner": "mallionaire",
+        "review_body": "Farmyard fun!",
+        "review_img_url": "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
+        "created_at": "2021-01-18T10:00:20.514Z",
+        "votes": 11,
+        "comment_count": "0"
+      }
+  }
+  },
+  "POST /api/reviews/:review_id/comments":{
+    "description": "post a new comment related to a review by an id",
+    "queries":[],
+    "params":["review_id"],
+    "exampleRequestBody":{
+      "username": "mallionaire",
+      "body": "I didn't know dogs could play games"
     }
+  },
+  "GET /api/reviews/:review_id/comments":{
+    "description": "get all the comments related to a single review",
+    "queries":[],
+    "params":["review_id"],
+    "exampleResponse":{"comments":
+      [
+        {
+        "comment_id": 5,
+        "body": "Now this is a story all about how, board games turned my life upside down",
+        "review_id": 2,
+        "author": "mallionaire",
+        "votes": 13,
+        "created_at": "2021-01-18T10:24:05.410Z"
+        }
+      ]
+    }
+  },
+  "GET /api/users":{
+    "description": "serves all users from users table",
+    "queries" : [],
+    "params":[],
+    "exampleResponse":{
+      "users":[{
+        
+          "user_id" : 1,
+          "username": "mallionaire",
+          "name": "haz",
+          "avatar_url":
+            "https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg"
+        }]
+      
+    }
+  },
+  "DELETE /api/comments/:comment_id":{
+    "description": "Deletes the comment with the related id",
+    "queries":[],
+    "params":["comment_id"],
+    "exampleResponse":{}
   }
 }
