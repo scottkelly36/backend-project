@@ -436,3 +436,14 @@ describe("Post add new comment review", () => {
       });
   });
 });
+
+describe.only("get /api", () => {
+  test("return json file ", () => {
+    return request(app)
+      .get("/api")
+      .expect(200)
+      .then(({ body }) => {
+        expect(typeof body.endpoints).toBe("object");
+      });
+  });
+});
