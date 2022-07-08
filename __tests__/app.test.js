@@ -339,3 +339,63 @@ describe("Get /api/reviews?sortby", () => {
       });
   });
 });
+describe("Post add new comment review", () => {
+  test("201 new comment was added", () => {
+    const newComment = {
+      username: "mallionaire",
+      body: "I didn't know dogs could play games",
+    };
+    return request(app)
+      .post("/api/reviews/1/comments")
+      .send(newComment)
+      .expect(201)
+      .then(({ body }) => {
+        expect(body.comment).toHaveProperty("comment_id");
+        expect(body.comment).toHaveProperty("body");
+        expect(body.comment).toHaveProperty("votes");
+        expect(body.comment).toHaveProperty("author");
+        expect(body.comment).toHaveProperty("created_at");
+        expect(body.comment).toHaveProperty("review_id");
+      });
+  });
+
+  test("check that the user exists before posting", () => {
+    const newComment = {
+      username: "jim",
+      body: "I didn't know dogs could play games",
+    };
+    return request(app)
+      .post("/api/reviews/1/comments")
+      .send(newComment)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("incorrect input");
+      });
+  });
+  test("check that the body is the correct datatype", () => {
+    const newComment = {
+      username: "mallionaire",
+      body: 0,
+    };
+    return request(app)
+      .post("/api/reviews/1/comments")
+      .send(newComment)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("incorrect input");
+      });
+  });
+  test("404 if wrong id is passed", () => {
+    const newComment = {
+      username: "mallionaire",
+      body: "I didn't know dogs could play games",
+    };
+    return request(app)
+      .post("/api/reviews/10000/comments")
+      .send(newComment)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Sorry review cant be found");
+      });
+  });
+});
