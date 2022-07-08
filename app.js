@@ -2,10 +2,17 @@ const express = require("express");
 const app = express();
 
 
+const {
+  getEndpoints
+} = require("./controllers/misc.controllers");
+
+
+
 //categories controllers
 const {
   getCategories
 } = require("./controllers/categories.controllers");
+
 
 
 
@@ -19,10 +26,12 @@ const {
 } = require("./controllers/reviews.controller");
 
 
+
 //users controllers
 const {
   getUsers
 } = require("./controllers/users.controllers");
+
 
 
 //comment controllers
@@ -40,6 +49,7 @@ const {
 
 app.use(express.json());
 
+app.get("/api", getEndpoints);
 app.get("/api/categories", getCategories);
 
 app.get("/api/reviews/:review_id", getReviewById);
