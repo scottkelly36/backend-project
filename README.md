@@ -1,39 +1,33 @@
-## Link to Hosted version
+# NC GAMES BACKEND
 
-https://scotts-game-app.herokuapp.com/
+## About
 
-## Project Summary
+    NC GAMES backend is the second part of the NC GAMES front end. NC GAMES backend is a series of end points that allow users to interact with a Postgres database to perform tasks such as finding reviews, liking and unliking reviews, posting comments.
 
-this is API for the purpose of accessing application data
-programmatically. This will serve data on board games,
-users, comments and reviews.
+    NC games backend can be found at : https://scotts-game-app.herokuapp.com/api
 
-The database is PSQL.
+## Tech Stack
 
-## instructions for cloning and set-up
+    PSQL
+    Javascript
+    Express
+    Node.js
+    Jest.js
+    Supertest
 
-to clone repository for from
-https://github.com/scottkelly36/be-mitchs-rare-treasures
+## How to Run
 
-in you command line clone from the fork link provided by
-github.
+    cd into desired file in command line.
 
-when cloned run npm i to install dependencies.
+    in terminal run : git clone https://github.com/scottkelly36/backend-project.git
 
-once installed run "npm run setup-dbs" to set up db.
+    once installed run npm i to install node packages.
 
-Then npm t to run tests and seed DB make sure your env files
-are set up first.
+    set up a postgres DB on your local system.
 
-## env files
+    once set up outline your enviroment variable as follows:
 
-create a .env.test and .env.development file to run seed.
+    create a .env.test and .env.development file to run seed.
 
-in files you can outline the enviroment variables PGDATABASE
-PGUSER PGPASSWORD PGPORT
-
-## minimum requirements
-
-node minimum requirement is v17.9.0
-
-to check current version of node run "node -v"
+    in files you can outline the enviroment variables PGDATABASE
+    PGUSER PGPASSWORD PGPORT
