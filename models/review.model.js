@@ -15,7 +15,7 @@ exports.selectReviewById = (id) => {
     if (result.rows.length === 0) {
       return Promise.reject({
         status: 404,
-        msg: "Sorry Review cant be found",
+        msg: "Sorry review cant be found",
       });
     } else {
       return result.rows[0];
@@ -24,9 +24,7 @@ exports.selectReviewById = (id) => {
 };
 
 exports.updateReviewVotes = (id, body) => {
-  const {
-    inc_votes
-  } = body;
+  const { inc_votes } = body;
   if (typeof inc_votes !== "number") {
     return Promise.reject({
       status: 400,
@@ -41,7 +39,7 @@ exports.updateReviewVotes = (id, body) => {
     if (result.rows.length === 0) {
       return Promise.reject({
         status: 404,
-        msg: "Sorry Review cant be found",
+        msg: "Sorry review cant be found",
       });
     } else {
       return result.rows[0];
@@ -58,9 +56,6 @@ exports.selectReviewComments = (id) => {
 };
 
 exports.selectReviews = (sort_by = "created_at", order = "ASC", category) => {
-
-
-
   const queryValues = [];
   const validSortBy = [
     "created_at",
@@ -102,7 +97,7 @@ exports.selectReviews = (sort_by = "created_at", order = "ASC", category) => {
     if (results.rows.length === 0) {
       return Promise.reject({
         status: 404,
-        msg: "No reviews found"
+        msg: "No reviews found",
       });
     } else {
       return results.rows;
@@ -111,10 +106,7 @@ exports.selectReviews = (sort_by = "created_at", order = "ASC", category) => {
 };
 
 exports.insertReviewComment = (data, id) => {
-  const {
-    username,
-    body
-  } = data;
+  const { username, body } = data;
   const created = new Date();
 
   return DB.query(`SELECT * FROM reviews WHERE review_id = $1`, [id])
